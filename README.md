@@ -1,4 +1,1 @@
-spn-events-api
-==============
-
-An API for the events happening in the Silicon Prairie.
+Context: https://www.facebook.com/groups/startupnebraska/permalink/827696967262850
