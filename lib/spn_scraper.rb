@@ -3,34 +3,34 @@ require 'open-uri'
 
 module SpnScraper
   
-  def self.run_spn_scrape
-    url = "http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"
+  def self.scrape
     page_num = 1
+    url = "http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"
     while OpenURI::HTTPError != '404 Not Found' do
       
       page = Nokogiri::HTML(open(url))
       
       page.css('.vevent').each do |event|
         SpnEvent.create!(
-          name: event.event_name, 
-          date: event.event_date,
-          location: event.address)
+          name: SpnScraper.event_name(event), 
+          date: SpnScraper.event_date(event),
+          location: SpnScraper.address(event))
       end
       page_num += 1
     end
   end
   
   
-  def event_name
-    css('.url').text.strip
+  def self.event_name(event)
+    event.css('.url').text.strip
   end
   
   def event_url
     self.page.css('.vevent')[0].css('.url')[0]['href']
   end
   
-  def event_date
-    css('.dtstart')[0].children[0].text
+  def self.event_date(event)
+    event.css('.dtstart')[0].children[0].text
   end
   
   def event_end
@@ -41,8 +41,8 @@ module SpnScraper
     page.css('.vevent')[0].css('.tribe-events-venue-details')[0].children.css('.author').text    
   end
   
-  def address
-    css('.tribe-events-venue-details')[0].children.css('.street-address').text    
+  def self.address(event)
+    event.css('.tribe-events-venue-details')[0].children.css('.street-address').text    
   end
   
   def state
