@@ -7,7 +7,7 @@ module SpnScraper
     page_num = 1
     url = "http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"
     while OpenURI::HTTPError != '404 Not Found' do
-      
+      page_num += 1
       page = Nokogiri::HTML(open(url))
       
       page.css('.vevent').each do |event|
@@ -16,7 +16,6 @@ module SpnScraper
           date: SpnScraper.event_date(event),
           location: SpnScraper.address(event))
       end
-      page_num += 1
     end
   end
   
