@@ -9,6 +9,6 @@ task :create_events => :environment do
   locs  = page.css('.tribe-events-venue-details')
   
   names.zip(dates, locs) do |name, date, loc|
-    SpnEvent.create!(name: name.text, date: date.text, location: loc.text)
+    SpnEvent.create!(name: name.attributes['title'].value, date: date.text.strip, location: loc.text.strip.gsub("\n", ''))
   end
 end
