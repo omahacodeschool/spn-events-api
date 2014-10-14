@@ -30,6 +30,7 @@ gem 'unicorn'
 # gem 'capistrano', :group => :development
 
 gem "nokogiri", '1.6.3.1', :require => "nokogiri"
+gem 'mechanize'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
