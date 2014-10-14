@@ -29,7 +29,7 @@ gem 'unicorn'
 # Deploy with Capistrano
 # gem 'capistrano', :group => :development
 
-gem 'nokogiri'
+gem "nokogiri", '1.6.3.1', :require => "nokogiri"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
