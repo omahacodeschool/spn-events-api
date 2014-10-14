@@ -1,16 +1,16 @@
-class SpnEvent < ActiveRecord::Base
-  attr_accessible :date, :location, :name, :time, :url
-  validates :name, :uniqueness => {:scope => :date}
-  require 'nokogiri'
-  require 'open-uri'
-    
+require 'nokogiri'
+require 'open-uri'
+
+module SpnScraper
+  
   def self.run_spn_scrape
+    url = "http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"
     page_num = 1
     while OpenURI::HTTPError != '404 Not Found' do
-      page  = Nokogiri::HTML(open("http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"))
-    
+      
+      page = Nokogiri::HTML(open(url))
+      
       page.css('.vevent').each do |event|
-        binding.pry
         SpnEvent.create!(
           name: event.event_name, 
           date: event.event_date,
@@ -30,7 +30,7 @@ class SpnEvent < ActiveRecord::Base
   end
   
   def event_date
-    self.css('.dtstart')[0].children[0].text
+    css('.dtstart')[0].children[0].text
   end
   
   def event_end
@@ -42,7 +42,7 @@ class SpnEvent < ActiveRecord::Base
   end
   
   def address
-    self.css('.tribe-events-venue-details')[0].children.css('.street-address').text    
+    css('.tribe-events-venue-details')[0].children.css('.street-address').text    
   end
   
   def state
