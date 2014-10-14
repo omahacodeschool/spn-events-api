@@ -14,4 +14,9 @@ class SpnEventsController < ActionController::API
   # Event Location Details
   # page.css('.tribe-events-venue-details').each do |item|
   # end
+  
+  # Mechanize 
+  # agent = Mechanize.new
+  # page = agent.get('http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=1&tribe_event_display=list')
+  # next_page = agent.page.link_with(:text => "Next Events »").click
 end
