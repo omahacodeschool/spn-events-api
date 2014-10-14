@@ -8,8 +8,8 @@ class SpnEvent < ActiveRecord::Base
   def self.run_spn_scrape
     page_num = 1
     while OpenURI::HTTPError != '404 Not Found' do
-      page  = Nokogiri::HTML(open("http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"))
-    
+      page = Nokogiri::HTML(open("http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"))        
+      page_num += 1    
       page.css('.vevent').each do |event|
         binding.pry
         SpnEvent.create!(
@@ -17,13 +17,12 @@ class SpnEvent < ActiveRecord::Base
           date: event.event_date,
           location: event.address)
       end
-      page_num += 1
     end
   end
   
   
-  def event_name
-    css('.url').text.strip
+  def event_name(event)
+    event.css.('.url').text.strip
   end
   
   def event_url
