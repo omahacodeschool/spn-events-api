@@ -1,5 +1,5 @@
-desc "Create Events"
-task :create_events => :environment do
+desc "Create SPN Events"
+task :create_spn_events => :environment do
   require 'nokogiri'
   require 'open-uri'
   page_num = 1
