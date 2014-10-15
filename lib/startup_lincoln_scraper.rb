@@ -21,8 +21,11 @@ module StartupLincolnScraper
         clicked_link = link.click.parser
         Event.create(
           event_name: StartupLincolnScraper.event_name(clicked_link),
-          event_origin: 'Startup Lincoln'
-          )
+          event_description: StartupLincolnScraper.event_description(clicked_link),
+          event_date: StartupLincolnScraper.event_date(clicked_link),
+          event_end: StartupLincolnScraper.event_end(clicked_link),
+          event_address: StartupLincolnScraper.event_location(clicked_link),
+          event_origin: 'Startup Lincoln')
       end
     end
   end
@@ -39,6 +42,38 @@ module StartupLincolnScraper
       ''
     else
       link.css('title').text
+    end
+  end
+  
+  def self.event_description(link)
+    if link.css('div')[3].css('div')[1].children.nil?
+      ''
+    else
+      link.css('div')[3].css('div')[1].children.text
+    end
+  end
+  
+  def self.event_date(link)
+    if link.css('div')[4].css('td')[1].children[1].nil?
+      '' 
+    else
+      link.css('div')[4].css('td')[1].children[1].attributes['datetime'].value
+    end
+  end
+  
+  def self.event_end(link)
+    if link.css('div')[4].css('td').children[2].nil?
+      '' 
+    else
+      link.css('div')[4].css('td')[1].children[1].attributes['datetime'].value
+    end
+  end
+  
+  def self.event_location(link)
+    if link.css('div')[4].css('td').children[6].nil?
+      ''
+    else
+      link.css('div')[4].css('td').children[6].children.children.text
     end
   end
 end
