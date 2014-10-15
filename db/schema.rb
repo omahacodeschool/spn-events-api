@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141015033107) do
+ActiveRecord::Schema.define(:version => 20141015034521) do
 
   create_table "events", :force => true do |t|
     t.string "event_name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20141015033107) do
     t.string "event_address"
     t.string "event_state"
     t.string "event_zip_code"
-    t.string "event_description"
+    t.text   "event_description"
     t.string "event_origin"
   end
 
