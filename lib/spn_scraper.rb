@@ -65,29 +65,30 @@ module SpnScraper
   end
   
   def self.event_date(event)
-    if event.css('.dtstart')[0].nil?
+    if event.css('.time-details').children.children[1].nil?
       ''
     else
-      Chronic.parse(event.css('.dtstart')[0].children[0].text)
+      date_time = event.css('.time-details').children.children[1].attributes['title'].value
+      time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
+      new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
+      adjusted_date = new_date + time_zone
+      event_date = Chronic.parse(adjusted_date)
     end
+    event_date
   end
   
   def self.event_end(event)
-    # end_date = event.css('.dtend')[0].children.text
-    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    parsed_date = ''
-    if event.css('.dtend')[0].nil?
+    if event.css('.time-details').children.children[3].nil?
       ''
     else
-      months.each do |month|
-        if event.css('.dtend')[0].children.text.include? month
-          parsed_date = Chronic.parse(event.css('.dtend')[0].children.text)
-        else
-          event.css('.dtend')[0].children.text
-        end
-      end
+      date_time = event.css('.time-details').children.children[3].attributes['title'].value
+      time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
+      new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
+      adjusted_date = new_date + time_zone
+      
+      event_end = Chronic.parse(adjusted_date)
     end
-    parsed_date   
+    event_end
   end
   
   def self.event_author(event)
