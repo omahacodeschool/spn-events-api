@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'chronic'
 
 module SpnScraper
   # Scraper for Silicon Prairie News Events Calendar
@@ -55,23 +56,34 @@ module SpnScraper
     if event.css('.dtstart')[0].nil?
       ''
     else
-      event.css('.dtstart')[0].children[0].text
+      Chronic.parse(event.css('.dtstart')[0].children[0].text)
     end
   end
   
   def self.event_end(event)
+    # end_date = event.css('.dtend')[0].children.text
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    parsed_date = ''
     if event.css('.dtend')[0].nil?
       ''
     else
-      event.css('.dtend')[0].children.text
-    end   
+      months.each do |month|
+        if event.css('.dtend')[0].children.text.include? month
+          parsed_date = Chronic.parse(event.css('.dtend')[0].children.text)
+        else
+          event.css('.dtend')[0].children.text
+        end
+      end
+    end
+    parsed_date   
   end
   
   def self.event_author(event)
-    if event.css('.tribe-events-venue-details')[0].children.css('.author').nil?    
+    event_author = event.css('.tribe-events-venue-details')[0].children.css('.author')
+    if event_author.nil?    
       ''
     else
-      event.css('.tribe-events-venue-details')[0].children.css('.author').text    
+      event_author.text    
     end
   end
   
