@@ -3,32 +3,12 @@ class Event < ActiveRecord::Base
   
   extend Geocoder::Model::ActiveRecord
 
-  reverse_geocoded_by :event_address, :event_state
-  after_validation :reverse_geocode
+  geocoded_by :full_address
+  after_validation :geocode
   
   validates :event_name, :uniqueness => {:scope => :event_date}
   
-  # def coordinates
-  #   b
-  #
-  # end
-  #
-  # def location
-  #   b = []
-  #   b << latitude
-  #   b << longitude
-  #   Geocoder.coordinates(b)
-  # end
-  #
-  # def coords
-  #   a = Geocoder.coordinates(name)
-  #   lat = a[0]
-  #   long = a[1]
-  #   update(latitude: lat)
-  #   update(longitude: long)
-  # end
-  #
-  # def address_coords(address, state)
-  #   [address, state].compact.join(', ')
-  # end
+  def full_address
+    "#{event_address} #{event_state}"
+  end
 end
