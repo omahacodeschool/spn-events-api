@@ -1,6 +1,6 @@
 class ChangeDatesFromStringToDatetime < ActiveRecord::Migration
   def change
-    change_column :events, :event_date, :datetime
-    change_column :events, :event_end, :datetime
+    remove_column :events, :event_date
+    remove_column :events, :event_end
   end
 end
