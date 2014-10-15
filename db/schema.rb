@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141015164234) do
+ActiveRecord::Schema.define(:version => 20141015190916) do
 
   create_table "events", :force => true do |t|
     t.string   "event_name"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(:version => 20141015164234) do
     t.string   "event_origin"
     t.datetime "event_date"
     t.datetime "event_end"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
 end

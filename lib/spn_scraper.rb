@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 require 'chronic'
+require 'geocoder'
 
 module SpnScraper
   # Scraper for Silicon Prairie News Events Calendar
@@ -25,9 +26,12 @@ module SpnScraper
           event_zip_code: SpnScraper.event_zip_code(event),
           event_description: SpnScraper.event_description(event),
           event_state: SpnScraper.event_state(event),
-          event_origin: 'Silicon Prairie News'
+          event_origin: 'Silicon Prairie News',
+          latitude: SpnScraper.event_coords(event)[0],
+          longitude: SpnScraper.event_coords(event)[1]
           )
       end
+
       page_num += 1
       url = "http://siliconprairienews.com/events/list/?action=tribe_list&tribe_paged=#{page_num}&tribe_event_display=list"
     end
@@ -36,6 +40,14 @@ module SpnScraper
   # Methods specific to each piece of information on SPN Event calendar.
   #
   # Each method has a fragile smelly conditional to hopefully prevent errors when information is not available.
+  
+  def self.event_coords(event)
+    address = event.css('.tribe-events-venue-details')[0].children.css('.street-address').text
+    region = event.css('.tribe-events-venue-details')[0].children.css('.region').text
+    coords = address + ', ' + region
+    Geocoder.coordinates(coords)
+    binding.pry
+  end
   def self.event_name(event)
     if event.css('.url').nil?
       ''

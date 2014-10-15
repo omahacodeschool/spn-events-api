@@ -32,5 +32,6 @@ gem 'unicorn'
 gem "nokogiri", '1.6.3.1', :require => "nokogiri"
 gem 'mechanize'
 gem 'chronic'
+gem 'geocoder'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
