@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'chronic'
 require 'geocoder'
+require 'mechanize'
 
 module SpnScraper
   # Scraper for Silicon Prairie News Events Calendar
