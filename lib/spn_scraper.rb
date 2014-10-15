@@ -46,8 +46,8 @@ module SpnScraper
     region = event.css('.tribe-events-venue-details')[0].children.css('.region').text
     coords = address + ', ' + region
     Geocoder.coordinates(coords)
-    binding.pry
   end
+  
   def self.event_name(event)
     if event.css('.url').nil?
       ''
