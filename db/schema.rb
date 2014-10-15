@@ -11,16 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141014152216) do
+ActiveRecord::Schema.define(:version => 20141015033107) do
 
-  create_table "spn_events", :force => true do |t|
-    t.string   "name"
-    t.string   "date"
-    t.string   "time"
-    t.string   "location"
-    t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "events", :force => true do |t|
+    t.string "event_name"
+    t.string "event_url"
+    t.string "event_date"
+    t.string "event_end"
+    t.string "event_author"
+    t.string "event_address"
+    t.string "event_state"
+    t.string "event_zip_code"
+    t.string "event_description"
+    t.string "event_origin"
   end
 
 end

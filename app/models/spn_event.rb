@@ -1,4 +1,4 @@
-class SpnEvent < ActiveRecord::Base
+class Event < ActiveRecord::Base
   attr_accessible :date, :location, :name, :time, :url
   validates :name, :uniqueness => {:scope => :date}
   
