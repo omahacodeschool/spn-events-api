@@ -15,7 +15,6 @@ module TechOmahaScraper
   #
   # Iterates over links gathered through Mechanize.
   def self.scrape
-    binding.pry
     base_url   = "https://www.google.com/calendar/htmlembed?height=600&wkst=1&bgcolor=%23ff6666&src=689bo9l4k74mu9unjbqtnulpn0@group.calendar.google.com&color=%23A32929&ctz=America/Chicago&dates="
     this_month = Time.now.month
     this_year  = Time.now.year

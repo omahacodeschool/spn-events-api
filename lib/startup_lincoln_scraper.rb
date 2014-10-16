@@ -20,9 +20,7 @@ module StartupLincolnScraper
     this_year  = Time.now.year
     agent      = Mechanize.new
     url1       = "#{base_url}#{this_year}#{this_month}01/#{this_year}#{StartupLincolnScraper.next_month(this_month)}01"
-    binding.pry
     url2       = "#{base_url}#{StartupLincolnScraper.next_year(this_year, StartupLincolnScraper.next_month(this_month))}#{StartupLincolnScraper.next_month(this_month)}01/#{this_year}#{StartupLincolnScraper.next_month(this_month + 1)}01&mode=MONTH"
-    binding.pry
     page1      = agent.get(url1)
     page2      = agent.get(url2)
     links      = StartupLincolnScraper.prep_links(page1) + StartupLincolnScraper.prep_links(page2)
