@@ -15,7 +15,7 @@ module StartupLincolnScraper
     link_num = links.length
     links_scraped = 0
     
-    while link_num >= links_scraped do
+    until links_scraped >= link_num do
       links.each do |link|
         links_scraped += 1
         clicked_link = link.click.parser
