@@ -43,18 +43,24 @@ module TechOmahaScraper
   #
   # Examples
   #
-  #   TechOmahaScraper.next_month(12)
+  #   StartupLincolnScraper.next_month(12)
   #   # => '01'
-  #   TechOmahaScraper.next_month(11)
-  #   # => 12
+  #   StartupLincolnScraper.next_month(11)
+  #   # => '12'
   #
-  # Returns the String '01' if month is 12(December) otherwise returns the given month plus one.
+  # Returns the String value of month incremented by one.
   def self.next_month(month)
-    if month == 12
-      next_month = '01'
-    else
-      next_month = month + 1
+    next_month = month + 1
+    if next_month == 13
+      next_month = 1
     end
+    
+    if next_month < 10
+      next_month = '0' + next_month.to_s
+    else
+      next_month = next_month.to_s
+    end
+    
     next_month
   end
   
@@ -85,15 +91,13 @@ module TechOmahaScraper
   #
   # Examples
   #
-  #   TechOmahaScraper.prep_links(page1)
+  #   StartupLincolnScraper.prep_links(page1)
   #   # => Array of Mechanize Link objects with the specified links removed.
   #
   # Returns Array of Mechanize Link Objects.
   def self.prep_links(page)
     links = page.links
-    links.slice!(0..4)
-    links.slice!(links.length - 1)
-    links
+    links.slice(5...(links.length - 1))
   end
   
   # Specific content scraping methods, retrieving data relevant to method name.
