@@ -30,20 +30,19 @@ module Api
         @near_events = Event.near(loc, params[:number])
         render json: @near_events
       end
-      
+
       def events_today
         date = Date.today
         events = Event.all
         @events_today = []
         events.each do |e|
           if e.event_date == date
-            @events_today << e            
+            @events_today << e
           end
-          @events_today
         end
         render json: @events_today
       end
-      
+
       def events_all_week
         count = 1
         date = Date.today
