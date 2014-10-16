@@ -20,6 +20,13 @@ module Api
         @startup_lincoln_events = Event.where(event_origin: 'Startup Lincoln')
         render json: @startup_lincoln_events
       end
+      
+      def events_near
+        result = "98.190.180.221"
+        loc = Geocoder.coordinates(result)
+        @near_events = Event.near(loc, params[:number])
+        render json: @near_events
+      end
     end
   end
 end
