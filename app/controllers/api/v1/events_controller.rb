@@ -45,7 +45,6 @@ module Api
 
       def events_all_week
         @events_rest_of_week = Event.same_week?
-        end
         render json: @events_rest_of_week
       end
     end
