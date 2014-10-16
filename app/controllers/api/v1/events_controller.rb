@@ -44,19 +44,9 @@ module Api
       end
 
       def events_all_week
-        count = 1
-        date = Date.today
-        events = Event.all
-        @events_week = []
-        while count < 8
-          events.each do |e|
-            if e.event_date.wday == date.wday
-              @events_week << e
-            end
-          end
-          count += 1
+        @events_rest_of_week = Event.same_week?
         end
-        render json: @events_week
+        render json: @events_rest_of_week
       end
     end
   end
