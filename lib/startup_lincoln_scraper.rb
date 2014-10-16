@@ -6,16 +6,19 @@ require 'mechanize'
 
 # Web Scraper for Startup Lincoln Calendar
 module StartupLincolnScraper
-  
-  # TODO Move forward a calendar page
-  # Clean up outdated Events
-  # Refactor
+    
+  # TODO Clean up outdated Events
+  # TODO Refactor
   
   def self.scrape
+    base_url   = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates="
     this_month = Time.now.month
+    this_year  = Time.now.year
     agent      = Mechanize.new
-    url1       = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{this_month}01/2014#{StartupLincolnScraper.next_month(this_month)}01"
-    url2       = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{StartupLincolnScraper.next_month(this_month)}01/2014#{StartupLincolnScraper.next_month(this_month + 1)}01"
+    url1       = "#{base_url}#{this_year}#{this_month}01/#{this_year}#{StartupLincolnScraper.next_month(this_month)}01"
+    binding.pry
+    url2       = "#{base_url}#{StartupLincolnScraper.next_year(this_year, StartupLincolnScraper.next_month(this_month))}#{StartupLincolnScraper.next_month(this_month)}01/#{this_year}#{StartupLincolnScraper.next_month(this_month + 1)}01&mode=MONTH"
+    binding.pry
     page1      = agent.get(url1)
     page2      = agent.get(url2)
     links      = StartupLincolnScraper.prep_links(page1) + StartupLincolnScraper.prep_links(page2)
@@ -39,6 +42,14 @@ module StartupLincolnScraper
       next_month = month + 1
     end
     next_month
+  end
+  
+  def self.next_year(year, month)
+    if month == 12
+      next_year = year + 1
+    else
+      year
+    end
   end
   
   def self.prep_links(page)
