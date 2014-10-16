@@ -47,11 +47,11 @@ module SpnScraper
   #
   # Examples
   #
-  #   SpnScraper.remove_time_zone("2014-10-16CDT12:00")
+  #   SpnScraper.separate_date("2014-10-16CDT12:00")
   #   # => ["2014-10-16 12:00", "CDT"]
   #
   # Returns Array of separated date_time string parts.
-  def self.remove_time_zone(date_time)
+  def self.separate_date(date_time)
     sep_time = []
     time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
     new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
@@ -108,7 +108,7 @@ module SpnScraper
       ''
     else
       date_time = event.css('.time-details').children.children[1].attributes['title'].value
-      normalized_date = SpnScraper.normalize_date(date_time)
+      normalized_date = SpnScraper.normalize_date(SpnScraper.separate_date(date_time))
       
       event_date = Chronic.parse(normalized_date)
     end
@@ -120,7 +120,7 @@ module SpnScraper
       ''
     else
       date_time = event.css('.time-details').children.children[3].attributes['title'].value
-      normalized_date = SpnScraper.normalize_date(date_time)
+      normalized_date = SpnScraper.normalize_date(SpnScraper.separate_date(date_time))
       
       event_end = Chronic.parse(normalized_date)
     end
