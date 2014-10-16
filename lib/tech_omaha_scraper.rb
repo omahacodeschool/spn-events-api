@@ -19,18 +19,16 @@ module TechOmahaScraper
     link_num = links.length
     links_scraped = 0
     
-    until links_scraped >= link_num do
-      links.each do |link|
-        links_scraped += 1
-        clicked_link = link.click.parser
-        Event.create(
-          event_name: TechOmahaScraper.event_name(clicked_link),
-          event_description: TechOmahaScraper.event_description(clicked_link),
-          event_date: TechOmahaScraper.event_date(clicked_link),
-          event_end: TechOmahaScraper.event_end(clicked_link),
-          event_address: TechOmahaScraper.event_location(clicked_link),
-          event_origin: 'Tech Omaha')
-      end
+    links.each do |link|
+      links_scraped += 1
+      clicked_link = link.click.parser
+      Event.create(
+        event_name: TechOmahaScraper.event_name(clicked_link),
+        event_description: TechOmahaScraper.event_description(clicked_link),
+        event_date: TechOmahaScraper.event_date(clicked_link),
+        event_end: TechOmahaScraper.event_end(clicked_link),
+        event_address: TechOmahaScraper.event_location(clicked_link),
+        event_origin: 'Tech Omaha')
     end
   end
   

@@ -7,7 +7,7 @@ module Api
       end
       
       def spn_events
-        @spn_events = Event.where(event_origin: 'Silicon Prairie News')
+        @spn_events = Event.where(event_origin: 'Silicon_Prairie_News')
         render json: @spn_events
       end
       
@@ -19,6 +19,10 @@ module Api
       def startup_lincoln_events
         @startup_lincoln_events = Event.where(event_origin: 'Startup Lincoln')
         render json: @startup_lincoln_events
+      end
+      
+      def spn_event_by_id
+        
       end
     end
   end
