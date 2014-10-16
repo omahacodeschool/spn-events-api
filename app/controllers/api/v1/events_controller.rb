@@ -25,10 +25,38 @@ module Api
       end
       
       def events_near
-        result = "98.190.180.221"
+        result = request.location
         loc = Geocoder.coordinates(result)
         @near_events = Event.near(loc, params[:number])
         render json: @near_events
+      end
+      
+      def events_today
+        date = Date.today
+        events = Event.all
+        @events_today = []
+        events.each do |e|
+          if e.event_date == date
+            @events_today << e            
+          end
+        end
+        render json: @events_today
+      end
+      
+      def events_all_week
+        count = 1
+        date = Date.today
+        events = Event.all
+        @events_week = []
+        while count < 8
+          events.each do |e|
+            if e.event_date.wday == date.wday
+              @events_week << e
+            end
+          end
+          count += 1
+        end
+        render json: @events_week
       end
     end
   end
