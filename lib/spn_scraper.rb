@@ -43,7 +43,7 @@ module SpnScraper
   
   # Methods specific to each piece of information on SPN Event calendar.
   #
-  # Each method has a fragile smelly conditional to hopefully prevent errors when information is not available.
+  # Each method has a fragile smelly conditional to hopefully prevent errors when information is not available.ß
   def self.event_name(event)
     if event.css('.url').nil?
       ''

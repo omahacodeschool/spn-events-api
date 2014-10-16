@@ -22,7 +22,13 @@ module Api
       end
       
       def spn_event_by_id
-        
+      end
+      
+      def events_near
+        result = "98.190.180.221"
+        loc = Geocoder.coordinates(result)
+        @near_events = Event.near(loc, params[:number])
+        render json: @near_events
       end
     end
   end
