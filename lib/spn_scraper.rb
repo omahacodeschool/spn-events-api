@@ -4,7 +4,13 @@ require 'chronic'
 require 'geocoder'
 require 'mechanize'
 
+# Web Scraper for Silicon Prairie News
 module SpnScraper
+  
+  # TODO TomDoc Methods
+  # TODO Refactor
+  # TODO Clean up outdate events
+  
   # Scraper for Silicon Prairie News Events Calendar
   #
   # Scrape method loops over all events, incrementing by one to go to the next page.
