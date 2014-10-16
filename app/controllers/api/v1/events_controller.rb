@@ -35,7 +35,7 @@ module Api
       
       def events_all_week
         @events_all_week = Event.week_of_events
-        render json: @events_rest_of_week
+        render json: @event_all_week
       end
 
       def events_rest_of_week
