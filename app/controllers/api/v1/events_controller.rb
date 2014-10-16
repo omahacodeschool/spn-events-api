@@ -20,10 +20,7 @@ module Api
         @startup_lincoln_events = Event.where(event_origin: 'Startup_Lincoln')
         render json: @startup_lincoln_events
       end
-      
-      def spn_event_by_id
-      end
-      
+
       def events_near
         result = request.location
         loc = Geocoder.coordinates(result)
