@@ -5,7 +5,11 @@ require 'geocoder'
 require 'mechanize'
 
 module TechOmahaScraper
-
+  
+  # TODO Move forward a calendar page
+  # Clean up outdated Events
+  # Refactor
+  
   def self.scrape
     # page_num = 1
     agent = Mechanize.new

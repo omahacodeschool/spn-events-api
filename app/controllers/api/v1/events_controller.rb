@@ -20,7 +20,6 @@ module Api
         @startup_lincoln_events = Event.where(event_origin: 'Startup Lincoln')
         render json: @startup_lincoln_events
       end
-      
     end
   end
 end
