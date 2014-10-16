@@ -5,7 +5,7 @@ require_relative '../tech_omaha_scraper.rb'
 
 desc "Scrape for Events"
 task :scrape_events => :environment do
-  SpnScraper.scrape
   StartupLincolnScraper.scrape
   TechOmahaScraper.scrape
+  SpnScraper.scrape
 end
