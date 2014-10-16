@@ -39,6 +39,7 @@ module Api
           if e.event_date == date
             @events_today << e            
           end
+          @events_today
         end
         render json: @events_today
       end
