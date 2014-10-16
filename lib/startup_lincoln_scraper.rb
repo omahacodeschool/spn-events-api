@@ -4,6 +4,7 @@ require 'chronic'
 require 'geocoder'
 require 'mechanize'
 
+# Web Scraper for Startup Lincoln Calendar
 module StartupLincolnScraper
   
   # TODO Move forward a calendar page
@@ -11,26 +12,32 @@ module StartupLincolnScraper
   # Refactor
   
   def self.scrape
-    # page_num = 1
     month = Time.now.month
     agent = Mechanize.new
-    url = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{month}01/2014#{month + 1}01"
-    page = agent.get(url)
+    url   = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{month}01/2014#{StartupLincolnScraper.next_month}01"
+    page  = agent.get(url)
     links = StartupLincolnScraper.prep_links(page)
-    link_num = links.length
-    links_scraped = 0
     
     links.each do |link|
-      links_scraped += 1
       clicked_link = link.click.parser
       Event.create(
-        event_name: StartupLincolnScraper.event_name(clicked_link),
+        event_name:        StartupLincolnScraper.event_name(clicked_link),
         event_description: StartupLincolnScraper.event_description(clicked_link),
-        event_date: StartupLincolnScraper.event_date(clicked_link),
-        event_end: StartupLincolnScraper.event_end(clicked_link),
-        event_address: StartupLincolnScraper.event_location(clicked_link),
-        event_origin: 'Startup Lincoln')
+        event_date:        StartupLincolnScraper.event_date(clicked_link),
+        event_end:         StartupLincolnScraper.event_end(clicked_link),
+        event_address:     StartupLincolnScraper.event_location(clicked_link),
+        event_origin:      'Startup_Lincoln')
     end
+  end
+  
+  def self.next_month
+    this_month = Time.now.month
+    if this_month == 12
+      next_month = '01'
+    else
+      next_month = this_month + 1
+    end
+    next_month
   end
   
   def self.prep_links(page)

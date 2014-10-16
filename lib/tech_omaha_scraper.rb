@@ -11,16 +11,14 @@ module TechOmahaScraper
   # Refactor
   
   def self.scrape
-    # page_num = 1
+    month = Time.now.month
     agent = Mechanize.new
-    url = "https://www.google.com/calendar/htmlembed?height=600&wkst=1&bgcolor=%23ff6666&src=689bo9l4k74mu9unjbqtnulpn0@group.calendar.google.com&color=%23A32929&ctz=America/Chicago&dates=20141001/20141101&mode=MONTH"
+    url = "https://www.google.com/calendar/htmlembed?height=600&wkst=1&bgcolor=%23ff6666&src=689bo9l4k74mu9unjbqtnulpn0@group.calendar.google.com&color=%23A32929&ctz=America/Chicago&dates=2014#{month}01/2014#{TechOmahaScraper.next_month}01&mode=MONTH"
     page = agent.get(url)
     links = TechOmahaScraper.prep_links(page)
-    link_num = links.length
-    links_scraped = 0
+    
     
     links.each do |link|
-      links_scraped += 1
       clicked_link = link.click.parser
       Event.create(
         event_name: TechOmahaScraper.event_name(clicked_link),
@@ -28,8 +26,18 @@ module TechOmahaScraper
         event_date: TechOmahaScraper.event_date(clicked_link),
         event_end: TechOmahaScraper.event_end(clicked_link),
         event_address: TechOmahaScraper.event_location(clicked_link),
-        event_origin: 'Tech Omaha')
+        event_origin: 'Tech_Omaha')
     end
+  end
+  
+  def self.next_month
+    this_month = Time.now.month
+    if this_month == 12
+      next_month = '01'
+    else
+      next_month = this_month + 1
+    end
+    next_month
   end
   
   def self.prep_links(page)

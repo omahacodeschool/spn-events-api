@@ -27,7 +27,7 @@ module SpnScraper
           event_zip_code: SpnScraper.event_zip_code(event),
           event_description: SpnScraper.event_description(event),
           event_state: SpnScraper.event_state(event),
-          event_origin: 'Silicon Prairie News'
+          event_origin: 'Silicon_Prairie_News'
           )
       end
       page_num += 1

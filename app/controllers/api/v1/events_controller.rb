@@ -12,12 +12,12 @@ module Api
       end
       
       def tech_omaha_events
-        @tech_omaha_events = Event.where(event_origin: 'Tech Omaha')
+        @tech_omaha_events = Event.where(event_origin: 'Tech_Omaha')
         render json: @tech_omaha_events
       end
       
       def startup_lincoln_events
-        @startup_lincoln_events = Event.where(event_origin: 'Startup Lincoln')
+        @startup_lincoln_events = Event.where(event_origin: 'Startup_Lincoln')
         render json: @startup_lincoln_events
       end
       
