@@ -7,15 +7,20 @@ require 'mechanize'
 # Web Scraper for Startup Lincoln Calendar
 module StartupLincolnScraper
   
-  # TODO Move forward a calendar page
-  # Clean up outdated Events
-  # Refactor
+  # TODO TEST TEST TEST  
+  # TODO Clean up outdated Events
+  # TODO Refactor
   
+  # Scrape method generates Event Objects using dynamic months and years
+  #
+  # Iterates over links gathered through Mechanize.
   def self.scrape
+    base_url   = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates="
     this_month = Time.now.month
+    this_year  = Time.now.year
     agent      = Mechanize.new
-    url1       = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{this_month}01/2014#{StartupLincolnScraper.next_month(this_month)}01"
-    url2       = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{StartupLincolnScraper.next_month(this_month)}01/2014#{StartupLincolnScraper.next_month(this_month + 1)}01"
+    url1       = "#{base_url}#{this_year}#{this_month}01/#{this_year}#{StartupLincolnScraper.next_month(this_month)}01"
+    url2       = "#{base_url}#{StartupLincolnScraper.next_year(this_year, StartupLincolnScraper.next_month(this_month))}#{StartupLincolnScraper.next_month(this_month)}01/#{this_year}#{StartupLincolnScraper.next_month(this_month + 1)}01&mode=MONTH"
     page1      = agent.get(url1)
     page2      = agent.get(url2)
     links      = StartupLincolnScraper.prep_links(page1) + StartupLincolnScraper.prep_links(page2)
@@ -32,6 +37,18 @@ module StartupLincolnScraper
     end
   end
   
+  # Month incrementer, increases month value by one.
+  #
+  # month - The Integer month to be incremented.
+  #
+  # Examples
+  #
+  #   StartupLincolnScraper.next_month(12)
+  #   # => '01'
+  #   StartupLincolnScraper.next_month(11)
+  #   # => 12
+  #
+  # Returns the String '01' if month is 12(December) otherwise returns the given month plus one.
   def self.next_month(month)
     if month == 12
       next_month = '01'
@@ -41,6 +58,37 @@ module StartupLincolnScraper
     next_month
   end
   
+  # Year incrementer, increases year value by one.
+  #
+  # year  - The Integer year to be incremented.
+  # month - The Integer month to check for 12(December).
+  #
+  # Examples
+  #
+  #   StartupLincolnScraper.next_year(2014, 12)
+  #   # => 2015
+  #   StartupLincolnScraper.next_month(2014, 11)
+  #   # => 2014
+  #
+  # Returns the Integer 2015 if month is 12(December) otherwise returns the given Integer year.
+  def self.next_year(year, month)
+    if month == 12
+      next_year = year + 1
+    else
+      year
+    end
+  end
+  
+  # Link Array normalizer, slices off redundant page links.
+  #
+  # page - The pages Array of Mechanize link objects.
+  #
+  # Examples
+  #
+  #   StartupLincolnScraper.prep_links(page1)
+  #   # => Array of Mechanize Link objects with the specified links removed.
+  #
+  # Returns Array of Mechanize Link Objects.
   def self.prep_links(page)
     links = page.links
     links.slice!(0..4)
@@ -48,6 +96,18 @@ module StartupLincolnScraper
     links
   end
   
+  # Specific content scraping methods, retrieving data relevant to method name.
+  #
+  # link - parsed nokogiri Object
+  #
+  # Examples
+  #
+  #   StartupLincolnScraper.event_name(link)
+  #   # => ''
+  #   StartupLincolnScraper.event_name(link)
+  #   # => 'Some Event in the Node'
+  #
+  # Returns an empty String or String of text.
   def self.event_name(link)
     if link.css('title').text.nil?
       ''
