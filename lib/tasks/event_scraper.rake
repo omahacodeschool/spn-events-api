@@ -3,6 +3,7 @@ require_relative '../spn_scraper.rb'
 require_relative '../startup_lincoln_scraper.rb'
 require_relative '../tech_omaha_scraper.rb'
 
+# Scrape all Calendars
 desc "Scrape for all Events"
 task :scrape_events => :environment do
   StartupLincolnScraper.scrape
@@ -10,10 +11,12 @@ task :scrape_events => :environment do
   SpnScraper.scrape
 end
 
+# Scrape only SPN Calendar
 desc "Scrape for SPN Events"
 task :scrape_spn => :environment do
   SpnScraper.scrape
 end
+
 
 desc "Scrape for Tech Omaha Events"
 task :scrape_tech_omaha => :environment do
