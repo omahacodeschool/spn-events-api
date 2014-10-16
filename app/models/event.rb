@@ -13,13 +13,37 @@ class Event < ActiveRecord::Base
   end
   
   def self.same_week?
-    todays_events = []
+    rest_of_weeks_events = []
     Event.all.each do |event|
       if Time.now <= event.event_date.to_s.slice(0..9) && event.event_date.to_s.slice(0..9) < Time.now.end_of_week
-        todays_events << event
+        rest_of_weeks_events << event
       else  
         next
       end  
+    end
+    rest_of_weeks_events
+  end
+  
+  def self.week_of_events
+    weeks_events = []
+    Event.all.each do |event|
+      if event.event_date.to_s.slice(0..9).between?(Time.now.beginning_of_week, Time.now.end_of_week)
+        weeks_events << event
+      else
+        next
+      end
+    end
+    weeks_events
+  end
+  
+  def self.events_today
+    todays_events = []
+    Event.all.each do |event|
+      if event.event_date.to_s.slice(0..9) == Time.now
+        todays_events << event
+      else
+        next
+      end
     end
     todays_events
   end

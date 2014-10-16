@@ -32,18 +32,16 @@ module Api
       end
 
       def events_today
-        date = Date.today
-        events = Event.all
-        @events_today = []
-        events.each do |e|
-          if e.event_date == date
-            @events_today << e
-          end
-        end
-        render json: @events_today
+        @todays_events = Event.events_today
+        render json: @todays_events
+      end
+      
+      def events_all_week
+        @events_all_week = Event.week_of_events
+        render json: @events_rest_of_week
       end
 
-      def events_all_week
+      def events_rest_of_week
         @events_rest_of_week = Event.same_week?
         render json: @events_rest_of_week
       end

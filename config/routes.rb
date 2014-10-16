@@ -8,6 +8,7 @@ SpEventApi::Application.routes.draw do
       get 'events_near/:number' => 'events#events_near'
       get 'events_today' => 'events#events_today'
       get 'events_all_week' => 'events#events_all_week'
+      get 'events_rest_of_week' => 'events#events_rest_of_week'
     end
   end
 end
