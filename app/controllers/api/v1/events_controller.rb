@@ -23,7 +23,7 @@ module Api
 
       def events_near
         result = request.location
-        loc = Geocoder.coordinates(result)
+        loc = Geocoder.coordinates(result.data['ip'])
         @near_events = Event.near(loc, params[:number])
         render json: @near_events
       end
