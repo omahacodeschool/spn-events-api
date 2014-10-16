@@ -22,7 +22,6 @@ module SpnScraper
       page = Nokogiri::HTML(open(url))
       
       page.css('.vevent').each do |event|
-        binding.pry
         Event.create(
           event_name:        SpnScraper.event_name(event), 
           event_date:        SpnScraper.event_date(event),
