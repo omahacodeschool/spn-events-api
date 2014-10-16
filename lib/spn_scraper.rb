@@ -35,6 +35,12 @@ module SpnScraper
     end
   end
   
+  def self.normalize_date(date_time)
+    time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
+    new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
+    adjusted_date = new_date + time_zone
+  end
+  
   # Methods specific to each piece of information on SPN Event calendar.
   #
   # Each method has a fragile smelly conditional to hopefully prevent errors when information is not available.ß
@@ -59,10 +65,9 @@ module SpnScraper
       ''
     else
       date_time = event.css('.time-details').children.children[1].attributes['title'].value
-      time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
-      new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
-      adjusted_date = new_date + time_zone
-      event_date = Chronic.parse(adjusted_date)
+      normalized_date = SpnScraper.normalize_date(date_time)
+      
+      event_date = Chronic.parse(normalized_date)
     end
     event_date
   end
@@ -72,11 +77,9 @@ module SpnScraper
       ''
     else
       date_time = event.css('.time-details').children.children[3].attributes['title'].value
-      time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
-      new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
-      adjusted_date = new_date + time_zone
+      normalized_date = SpnScraper.normalize_date(date_time)
       
-      event_end = Chronic.parse(adjusted_date)
+      event_end = Chronic.parse(normalized_date)
     end
     event_end
   end
