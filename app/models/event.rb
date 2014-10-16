@@ -60,4 +60,15 @@ class Event < ActiveRecord::Base
     months_events
   end
   
+  def self.events_by_month(month)
+    events_for_month = []
+    Event.all.each do |event|
+      if event.event_date.to_s.slice(5..6) == month.to_s
+        events_for_month << event
+      else
+        next
+      end
+    end
+    events_for_month
+  end
 end

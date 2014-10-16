@@ -10,6 +10,7 @@ SpEventApi::Application.routes.draw do
       get 'events_all_week' => 'events#events_all_week'
       get 'events_rest_of_week' => 'events#events_rest_of_week'
       get 'events_this_month' => 'events#events_this_month'
+      get 'events_by_month/:month' => 'events#event_by_month'
     end
   end
 end

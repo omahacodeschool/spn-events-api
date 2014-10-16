@@ -49,6 +49,8 @@ module Api
       end
       
       def events_by_month
+        @events_by_month = Event.events_by_month(params[:month])
+        render json: @events_by_month
       end
     end
   end
