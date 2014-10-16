@@ -45,6 +45,6 @@ class Event < ActiveRecord::Base
         next
       end
     end
-    todays_events
+    todays_event
   end
 end
