@@ -47,14 +47,32 @@ module SpnScraper
   #
   # Examples
   #
-  #   SpnScraper.normalize_date("2014-10-16CDT12:00")
-  #   # => "2014-10-16 12:00CDT"
+  #   SpnScraper.remove_time_zone("2014-10-16CDT12:00")
+  #   # => ["2014-10-16 12:00", "CDT"]
   #
-  # Returns formatted String in the form of 'YYYY-MM-DD HH:MMTZ'.
-  def self.normalize_date(date_time)
+  # Returns Array of separated date_time string parts.
+  def self.remove_time_zone(date_time)
+    sep_time = []
     time_zone = /.*([a-zA-Z]{3,}).*/.match(date_time)[1]
     new_date = date_time.gsub(/[a-zA-Z]{3,}/, " ")
-    adjusted_date = new_date + time_zone
+    sep_time << new_date
+    sep_time << time_zone
+    sep_time
+  end
+  
+  # Date formatter, formats date for consistent conversion
+  #
+  # date_array - Array containing separated datetime
+  #
+  # Examples
+  #
+  #   SpnScraper.normalize_date(["2014-10-16 12:00", "CDT"])
+  #   # => "2014-10-16 12:00CDT"
+  #
+  # Returns formatted date/time String.
+  def self.normalize_date(date_array)
+    adjusted_date = date_array[0] + date_array[1]
+    adjusted_date
   end
   
   # Specific content scraping methods, retrieving data relevant to method name.
