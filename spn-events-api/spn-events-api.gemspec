@@ -6,9 +6,9 @@ require 'spn/events/api/version'
 Gem::Specification.new do |spec|
   spec.name          = "spn-events-api"
   spec.version       = Spn::Events::Api::VERSION
-  spec.authors       = ["“Kyle"]
+  spec.authors       = ["“Kyle Schmit && Matt Taylor"]
   spec.email         = ["kschmit90@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.summary       = %q{This is a web scraping API which gathers information about events in the Silicon Prairie.}
   spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
