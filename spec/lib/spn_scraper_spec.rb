@@ -19,7 +19,7 @@ describe SpnScraper do
     end
   end
   
-  describe "remove_time_zone method" do
+  describe "#remove_time_zone" do
     it "should match the time zone within the date string" do
       date = "2014-10-16CDT12:00"
       expect(SpnScraper.separate_date(date)[1]).to eq('CDT')
