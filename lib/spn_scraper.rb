@@ -79,7 +79,7 @@ module SpnScraper
       date_time = event.css('.time-details').children.children[3].attributes['title'].value
       normalized_date = SpnScraper.normalize_date(date_time)
       
-      event_end = Chronic.parse(adjusted_date)
+      event_end = Chronic.parse(normalized_date)
     end
     event_end
   end
