@@ -44,7 +44,8 @@ module Api
       end
       
       def events_this_month
-        
+        @events_this_month = Event.events_this_month
+        render json: @events_this_month
       end
       
       def events_by_month

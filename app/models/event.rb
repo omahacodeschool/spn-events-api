@@ -51,7 +51,7 @@ class Event < ActiveRecord::Base
   def self.events_this_month
     months_events = []
     Event.all.each do |event|
-      if event.event_date.to_s.slice(5..6) == Time.now.month
+      if event.event_date.to_s.slice(5..6) == Time.now.month.to_s
         months_events << event
       else
         next
