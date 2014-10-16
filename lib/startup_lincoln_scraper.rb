@@ -12,11 +12,13 @@ module StartupLincolnScraper
   # Refactor
   
   def self.scrape
-    month = Time.now.month
-    agent = Mechanize.new
-    url   = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{month}01/2014#{StartupLincolnScraper.next_month}01"
-    page  = agent.get(url)
-    links = StartupLincolnScraper.prep_links(page)
+    this_month = Time.now.month
+    agent      = Mechanize.new
+    url1       = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{this_month}01/2014#{StartupLincolnScraper.next_month(this_month)}01"
+    url2       = "https://www.google.com/calendar/htmlembed?src=v33mkotgag28em0tjp25io556g@group.calendar.google.com&ctz=America/Chicago&dates=2014#{StartupLincolnScraper.next_month(this_month)}01/2014#{StartupLincolnScraper.next_month(this_month + 1)}01"
+    page1      = agent.get(url1)
+    page2      = agent.get(url2)
+    links      = StartupLincolnScraper.prep_links(page1) + StartupLincolnScraper.prep_links(page2)
     
     links.each do |link|
       clicked_link = link.click.parser
@@ -30,12 +32,11 @@ module StartupLincolnScraper
     end
   end
   
-  def self.next_month
-    this_month = Time.now.month
-    if this_month == 12
+  def self.next_month(month)
+    if month == 12
       next_month = '01'
     else
-      next_month = this_month + 1
+      next_month = month + 1
     end
     next_month
   end
