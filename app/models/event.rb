@@ -47,4 +47,17 @@ class Event < ActiveRecord::Base
     end
     todays_event
   end
+  
+  def self.events_this_month
+    months_events = []
+    Event.all.each do |event|
+      if event.event_date.to_s.slice(5..6) == Time.now.month
+        months_events << event
+      else
+        next
+      end
+    end
+    months_events
+  end
+  
 end

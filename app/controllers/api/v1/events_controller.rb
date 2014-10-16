@@ -42,6 +42,13 @@ module Api
         @events_rest_of_week = Event.same_week?
         render json: @events_rest_of_week
       end
+      
+      def events_this_month
+        
+      end
+      
+      def events_by_month
+      end
     end
   end
 end
