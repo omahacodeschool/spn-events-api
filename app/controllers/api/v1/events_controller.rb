@@ -2,7 +2,7 @@ module Api
   module V1
     class EventsController < ActionController::API
       def all_events
-        @all_events = Event.all
+        @all_events = Event.all_events
         render json: @all_events
       end
       
