@@ -2,7 +2,7 @@ Context: https://www.facebook.com/groups/startupnebraska/permalink/8276969672628
 
 Gem - Github https://github.com/omahacodeschool/silicon-prairie-events
 
-Gem - Rubygems https://rubygems.org/gems/silicon_prairie_event
+Gem - Rubygems https://rubygems.org/gems/silicon_prairie_events
 
 All Events: http://event-api.herokuapp.com/api/v1/all_events
 
