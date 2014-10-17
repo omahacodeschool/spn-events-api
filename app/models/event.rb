@@ -12,6 +12,19 @@ class Event < ActiveRecord::Base
     "#{event_address} #{event_state}"
   end
   
+  def self.spn_events
+    spn_events = []
+    spn_array = Event.where(event_origin: 'Silicon_Prairie_News')
+    spn_array.each do |event|
+      if Time.now <= event.event_date.to_s.slice(0..9)
+        spn_events << event
+      else
+        next
+      end
+    end
+    spn_events
+  end
+  
   def self.all_events
     all_events = []
     Event.all.each do |event|
