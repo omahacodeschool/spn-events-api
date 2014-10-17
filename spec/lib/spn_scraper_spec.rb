@@ -67,7 +67,7 @@ describe SpnScraper do
     #     expect(SpnScraper.event_end(event)).to eq(Fri, 14 Nov 2014 02:00:00 CST -06:00)
     #   end
     # end
-    # TODO END OF TODO
+    # TODO
     #
     describe '#event_author' do
       it 'should return a String with the event author or return an empty String' do

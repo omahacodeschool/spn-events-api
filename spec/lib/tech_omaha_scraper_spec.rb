@@ -89,7 +89,7 @@ describe TechOmahaScraper do
       #   end
       # end
       #
-      # TODO THEY ARE CONFUSING
+      # TODO
       #
       describe '#event_location' do
         it 'should return the String containing the event location' do
