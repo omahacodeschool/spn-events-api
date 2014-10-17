@@ -90,13 +90,13 @@ class Event < ActiveRecord::Base
   def self.events_today
     todays_events = []
     Event.all.each do |event|
-      if event.event_date.to_s.slice(0..9) == Time.now.yesterday
+      if event.event_date.to_s.slice(0..9) >= Time.now.yesterday && event.event_date.to_s.slice(0..9) <= Time.now.tomorrow
         todays_events << event
       else
         next
       end
     end
-    todays_event.sort { |a, b| a.event_date. <=> b.event_date }
+    todays_events.sort { |a, b| a.event_date. <=> b.event_date }
   end
   
   def self.events_this_month
