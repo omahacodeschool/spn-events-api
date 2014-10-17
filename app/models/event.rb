@@ -16,13 +16,40 @@ class Event < ActiveRecord::Base
     spn_events = []
     spn_array = Event.where(event_origin: 'Silicon_Prairie_News')
     spn_array.each do |event|
-      if Time.now <= event.event_date.to_s.slice(0..9)
+      binding.pry
+      if Time.now.yesterday <= event.event_date.to_s.slice(0..9)
         spn_events << event
       else
         next
       end
     end
     spn_events
+  end
+  
+  def self.lincoln_events
+    lincoln_events = []
+    lincoln_array = Event.where(event_origin: 'Startup_Lincoln')
+    lincoln_array.each do |event|
+      if Time.now.yesterday <= event.event_date.to_s.slice(0..9)
+        lincoln_events << event
+      else
+        next
+      end
+    end
+    lincoln_events
+  end
+  
+  def self.tech_omaha_events
+    tech_omaha_events = []
+    tech_omaha_array = Event.where(event_origin: 'Tech_Omaha')
+    tech_omaha_array.each do |event|
+      if Time.now.yesterday <= event.event_date.to_s.slice(0..9)
+        tech_omaha_events << event
+      else
+        next
+      end
+    end
+    tech_omaha_events
   end
   
   def self.all_events
@@ -95,5 +122,17 @@ class Event < ActiveRecord::Base
       end
     end
     events_for_month
+  end
+  
+  def self.past_events
+    past_events = []
+    Event.all.each do |event|
+      if event.event_date.to_s.slice(0..9) < Time.now
+        past_events << event
+      else
+        next
+      end
+    end
+    past_events
   end
 end

@@ -7,17 +7,17 @@ module Api
       end
       
       def spn_events
-        @spn_events = Event.where(event_origin: 'Silicon_Prairie_News')
+        @spn_events = Event.spn_events
         render json: @spn_events
       end
       
       def tech_omaha_events
-        @tech_omaha_events = Event.where(event_origin: 'Tech_Omaha')
+        @tech_omaha_events = Event.tech_omaha_events
         render json: @tech_omaha_events
       end
       
       def startup_lincoln_events
-        @startup_lincoln_events = Event.where(event_origin: 'Startup_Lincoln')
+        @startup_lincoln_events = Event.lincoln_events
         render json: @startup_lincoln_events
       end
 
@@ -51,6 +51,11 @@ module Api
       def events_by_month
         @events_by_month = Event.events_by_month(params[:month])
         render json: @events_by_month
+      end
+      
+      def past_events
+        @past_events = Event.past_events
+        render json: @past_events
       end
     end
   end
