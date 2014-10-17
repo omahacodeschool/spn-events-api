@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
   
   def self.spn_events
     spn_events = []
-    spn_array = Event.where(event_origin: 'Silicon_Prairie_News')
+    spn_array = Event.where(event_origin: 'Silicon_Prairie_News').order(:event_date)
     spn_array.each do |event|
       binding.pry
       if Time.now.yesterday <= event.event_date.to_s.slice(0..9)
